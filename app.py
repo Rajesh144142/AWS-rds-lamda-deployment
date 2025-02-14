@@ -62,9 +62,9 @@ def delete_user(user_id):
     return jsonify({"message": "User deleted successfully"}), 200
 
 # AWS Lambda requires a callable function
-def create_app():
-    return app
+# def create_app():
+#     return app
 
-# if __name__ == "__main__":
-#     app.run(host="0.0.0.0", port=5000, debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
