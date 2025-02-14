@@ -1,0 +1,14 @@
+{
+    "production": {
+        "app_function": "app.create_app",
+        "aws_region": "ap-south-1",
+        "profile_name": "default",
+        "s3_bucket": "zappa-python-server",
+        "runtime": "python3.10",
+        "environment_variables": {
+            "DATABASE_URL": "postgresql://postgres:leomessiten@rdspg172.cpyacgkokb25.ap-south-1.rds.amazonaws.com:5432/postgres"
+        },
+        "timeout_seconds": 30,
+        "memory_size": 512
+    }
+}

@@ -1,9 +1,9 @@
-name: Deploy Flask App to AWS Lambda
+name: Deploy to AWS Lambda
 
 on:
   push:
     branches:
-      - main  # Change if needed
+      - main  # Deploy on push to main branch
 
 jobs:
   deploy:
@@ -14,24 +14,19 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.11'  # Ensure this matches serverless.yml
+          python-version: 3.10
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install zappa
 
-      - name: Install Serverless Framework
-        run: npm install -g serverless
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1  # Change if needed
-
-      - name: Deploy with Serverless
-        run: serverless deploy
+      - name: Deploy to AWS Lambda
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ap-south-1
+        run: |
+          zappa update production

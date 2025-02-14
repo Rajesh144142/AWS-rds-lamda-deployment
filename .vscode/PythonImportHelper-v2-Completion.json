@@ -1,5 +1,66 @@
 [
     {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "pformat",
+        "importPath": "pprint",
+        "description": "pprint",
+        "isExtraImport": true,
+        "detail": "pprint",
+        "documentation": {}
+    },
+    {
+        "label": "jmespath",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "jmespath",
+        "description": "jmespath",
+        "detail": "jmespath",
+        "documentation": {}
+    },
+    {
+        "label": "exceptions",
+        "importPath": "jmespath",
+        "description": "jmespath",
+        "isExtraImport": true,
+        "detail": "jmespath",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -32,11 +93,64 @@
         "documentation": {}
     },
     {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "venv.Scripts.jp",
+        "description": "venv.Scripts.jp",
+        "peekOfCode": "def main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument('expression')\n    parser.add_argument('-f', '--filename',\n                        help=('The filename containing the input data.  '\n                              'If a filename is not given then data is '\n                              'read from stdin.'))\n    parser.add_argument('--ast', action='store_true',\n                        help=('Pretty print the AST, do not search the data.'))\n    args = parser.parse_args()",
+        "detail": "venv.Scripts.jp",
+        "documentation": {}
+    },
+    {
+        "label": "importlib_load_entry_point",
+        "kind": 2,
+        "importPath": "venv.Scripts.kappa-script",
+        "description": "venv.Scripts.kappa-script",
+        "peekOfCode": "def importlib_load_entry_point(spec, group, name):\n    dist_name, _, _ = spec.partition('==')\n    matches = (\n        entry_point\n        for entry_point in distribution(dist_name).entry_points\n        if entry_point.group == group and entry_point.name == name\n    )\n    return next(matches).load()\nglobals().setdefault('load_entry_point', importlib_load_entry_point)\nif __name__ == '__main__':",
+        "detail": "venv.Scripts.kappa-script",
+        "documentation": {}
+    },
+    {
+        "label": "__requires__",
+        "kind": 5,
+        "importPath": "venv.Scripts.kappa-script",
+        "description": "venv.Scripts.kappa-script",
+        "peekOfCode": "__requires__ = 'kappa==0.6.0'\ntry:\n    from importlib.metadata import distribution\nexcept ImportError:\n    try:\n        from importlib_metadata import distribution\n    except ImportError:\n        from pkg_resources import load_entry_point\ndef importlib_load_entry_point(spec, group, name):\n    dist_name, _, _ = spec.partition('==')",
+        "detail": "venv.Scripts.kappa-script",
+        "documentation": {}
+    },
+    {
         "label": "User",
         "kind": 6,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "class User(db.Model):\n    __tablename__ = 'users'\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(50), unique=True, nullable=False)\n    password = db.Column(db.String(100), nullable=False)\n    def to_dict(self):\n        return {\"id\": self.id, \"username\": self.username}\n# CREAT THE TABLE \nwith app.app_context():\n    db.create_all()",
+        "peekOfCode": "class User(db.Model):\n    __tablename__ = 'users'\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(50), unique=True, nullable=False)\n    password = db.Column(db.String(100), nullable=False)\n    def to_dict(self):\n        return {\"id\": self.id, \"username\": self.username}\n# CREATE TABLE\nwith app.app_context():\n    db.create_all()",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def home():\n    return jsonify({\"message\": \"Hello World\"})\n# API Routes\n@app.route('/users', methods=['GET'])\ndef get_users():\n    users = User.query.all()\n    return jsonify({\"users\": [i.to_dict() for i in users]})\n@app.route('/users', methods=['POST'])\ndef add_user():\n    data = request.json",
         "detail": "app",
         "documentation": {}
     },
@@ -45,7 +159,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def get_users():\n    var = User.query.all()\n    return jsonify({\"users\": [i.to_dict() for i in var]})\n# POST\n@app.route('/users', methods=['POST'])\ndef add_user():\n    data = request.json\n    if not data.get('username') or not data.get('password'):\n        return jsonify({\"error\": \"Username and password are required\"})\n    if User.query.filter_by(username=data['username']).first():",
+        "peekOfCode": "def get_users():\n    users = User.query.all()\n    return jsonify({\"users\": [i.to_dict() for i in users]})\n@app.route('/users', methods=['POST'])\ndef add_user():\n    data = request.json\n    if not data.get('username') or not data.get('password'):\n        return jsonify({\"error\": \"Username and password are required\"}), 400\n    if User.query.filter_by(username=data['username']).first():\n        return jsonify({\"error\": \"Username already taken\"}), 409",
         "detail": "app",
         "documentation": {}
     },
@@ -54,7 +168,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def add_user():\n    data = request.json\n    if not data.get('username') or not data.get('password'):\n        return jsonify({\"error\": \"Username and password are required\"})\n    if User.query.filter_by(username=data['username']).first():\n        return jsonify({\"error\": \"Username already taken\"})\n    new_user = User(username=data['username'], password=data['password'])\n    db.session.add(new_user)\n    db.session.commit()\n    return jsonify({\"message\": \"User added successfully\", \"user\": new_user.to_dict()})",
+        "peekOfCode": "def add_user():\n    data = request.json\n    if not data.get('username') or not data.get('password'):\n        return jsonify({\"error\": \"Username and password are required\"}), 400\n    if User.query.filter_by(username=data['username']).first():\n        return jsonify({\"error\": \"Username already taken\"}), 409\n    new_user = User(username=data['username'], password=data['password'])\n    db.session.add(new_user)\n    db.session.commit()\n    return jsonify({\"message\": \"User added successfully\", \"user\": new_user.to_dict()}), 201",
         "detail": "app",
         "documentation": {}
     },
@@ -63,7 +177,16 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def delete_user(user_id):\n    var = User.query.get(user_id)\n    if not var:\n        return jsonify({\"error\": \"User not found\"})\n    db.session.delete(var)\n    db.session.commit()\n    return jsonify({\"message\": \"User deleted successfully\"})\n# REUNNING IT\nif __name__ == '__main__':\n    app.run(debug=True)",
+        "peekOfCode": "def delete_user(user_id):\n    user = User.query.get(user_id)\n    if not user:\n        return jsonify({\"error\": \"User not found\"}), 404\n    db.session.delete(user)\n    db.session.commit()\n    return jsonify({\"message\": \"User deleted successfully\"}), 200\n# AWS Lambda requires a callable function\ndef create_app():\n    return app",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "create_app",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def create_app():\n    return app\n# if __name__ == \"__main__\":\n#     app.run(host=\"0.0.0.0\", port=5000, debug=True)",
         "detail": "app",
         "documentation": {}
     },
@@ -72,7 +195,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app = Flask(__name__)\n# TELLING FLASK WHERE TO FIND POSTGRESQL DATABASE\napp.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:leomessiten@rdspg172.cpyacgkokb25.ap-south-1.rds.amazonaws.com:5432/postgres'\n# CONNECTING SQLALCHEMY TO DATABASE\ndb = SQLAlchemy(app)\n# DEFINING THE MODEL\nclass User(db.Model):\n    __tablename__ = 'users'\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(50), unique=True, nullable=False)",
+        "peekOfCode": "app = Flask(__name__)\n# Use environment variables for security\napp.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')\n# CONNECTING SQLALCHEMY TO DATABASE\ndb = SQLAlchemy(app)\nclass User(db.Model):\n    __tablename__ = 'users'\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(50), unique=True, nullable=False)\n    password = db.Column(db.String(100), nullable=False)",
         "detail": "app",
         "documentation": {}
     },
@@ -81,7 +204,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:leomessiten@rdspg172.cpyacgkokb25.ap-south-1.rds.amazonaws.com:5432/postgres'\n# CONNECTING SQLALCHEMY TO DATABASE\ndb = SQLAlchemy(app)\n# DEFINING THE MODEL\nclass User(db.Model):\n    __tablename__ = 'users'\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(50), unique=True, nullable=False)\n    password = db.Column(db.String(100), nullable=False)\n    def to_dict(self):",
+        "peekOfCode": "app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')\n# CONNECTING SQLALCHEMY TO DATABASE\ndb = SQLAlchemy(app)\nclass User(db.Model):\n    __tablename__ = 'users'\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(50), unique=True, nullable=False)\n    password = db.Column(db.String(100), nullable=False)\n    def to_dict(self):\n        return {\"id\": self.id, \"username\": self.username}",
         "detail": "app",
         "documentation": {}
     },
@@ -90,7 +213,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "db = SQLAlchemy(app)\n# DEFINING THE MODEL\nclass User(db.Model):\n    __tablename__ = 'users'\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(50), unique=True, nullable=False)\n    password = db.Column(db.String(100), nullable=False)\n    def to_dict(self):\n        return {\"id\": self.id, \"username\": self.username}\n# CREAT THE TABLE ",
+        "peekOfCode": "db = SQLAlchemy(app)\nclass User(db.Model):\n    __tablename__ = 'users'\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(50), unique=True, nullable=False)\n    password = db.Column(db.String(100), nullable=False)\n    def to_dict(self):\n        return {\"id\": self.id, \"username\": self.username}\n# CREATE TABLE\nwith app.app_context():",
         "detail": "app",
         "documentation": {}
     }
