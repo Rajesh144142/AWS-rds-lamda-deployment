@@ -1,0 +1,97 @@
+[
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "SQLAlchemy",
+        "importPath": "flask_sqlalchemy",
+        "description": "flask_sqlalchemy",
+        "isExtraImport": true,
+        "detail": "flask_sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "class User(db.Model):\n    __tablename__ = 'users'\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(50), unique=True, nullable=False)\n    password = db.Column(db.String(100), nullable=False)\n    def to_dict(self):\n        return {\"id\": self.id, \"username\": self.username}\n# CREAT THE TABLE \nwith app.app_context():\n    db.create_all()",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "get_users",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def get_users():\n    var = User.query.all()\n    return jsonify({\"users\": [i.to_dict() for i in var]})\n# POST\n@app.route('/users', methods=['POST'])\ndef add_user():\n    data = request.json\n    if not data.get('username') or not data.get('password'):\n        return jsonify({\"error\": \"Username and password are required\"})\n    if User.query.filter_by(username=data['username']).first():",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "add_user",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def add_user():\n    data = request.json\n    if not data.get('username') or not data.get('password'):\n        return jsonify({\"error\": \"Username and password are required\"})\n    if User.query.filter_by(username=data['username']).first():\n        return jsonify({\"error\": \"Username already taken\"})\n    new_user = User(username=data['username'], password=data['password'])\n    db.session.add(new_user)\n    db.session.commit()\n    return jsonify({\"message\": \"User added successfully\", \"user\": new_user.to_dict()})",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "delete_user",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def delete_user(user_id):\n    var = User.query.get(user_id)\n    if not var:\n        return jsonify({\"error\": \"User not found\"})\n    db.session.delete(var)\n    db.session.commit()\n    return jsonify({\"message\": \"User deleted successfully\"})\n# REUNNING IT\nif __name__ == '__main__':\n    app.run(debug=True)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\n# TELLING FLASK WHERE TO FIND POSTGRESQL DATABASE\napp.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:leomessiten@rdspg172.cpyacgkokb25.ap-south-1.rds.amazonaws.com:5432/postgres'\n# CONNECTING SQLALCHEMY TO DATABASE\ndb = SQLAlchemy(app)\n# DEFINING THE MODEL\nclass User(db.Model):\n    __tablename__ = 'users'\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(50), unique=True, nullable=False)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['SQLALCHEMY_DATABASE_URI']",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:leomessiten@rdspg172.cpyacgkokb25.ap-south-1.rds.amazonaws.com:5432/postgres'\n# CONNECTING SQLALCHEMY TO DATABASE\ndb = SQLAlchemy(app)\n# DEFINING THE MODEL\nclass User(db.Model):\n    __tablename__ = 'users'\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(50), unique=True, nullable=False)\n    password = db.Column(db.String(100), nullable=False)\n    def to_dict(self):",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "db = SQLAlchemy(app)\n# DEFINING THE MODEL\nclass User(db.Model):\n    __tablename__ = 'users'\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(50), unique=True, nullable=False)\n    password = db.Column(db.String(100), nullable=False)\n    def to_dict(self):\n        return {\"id\": self.id, \"username\": self.username}\n# CREAT THE TABLE ",
+        "detail": "app",
+        "documentation": {}
+    }
+]
